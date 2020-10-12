@@ -36,6 +36,10 @@
     font-weight: 800;
 }
 
+#page-map .leaflet-container{
+    z-index: 5; /* Deixa o mapa abaixo do botão */
+}
+
 #page-map .create-orphanage{
     position: absolute;
     right: 40px;
@@ -52,6 +56,8 @@
     align-items: center;
 
     transition: backgound-color 0.2s;
+
+    z-index: 10;/* Deixa o botão acima do mapa */
 }
 
 #page-map .create-orphanage:hover{
