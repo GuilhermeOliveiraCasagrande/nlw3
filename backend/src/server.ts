@@ -1,3 +1,4 @@
+//Parei aqui: https://youtu.be/QArToKrgBNs?t=3976
 import express from "express"
 import routes from "./routes"
 import "./database/connection"
