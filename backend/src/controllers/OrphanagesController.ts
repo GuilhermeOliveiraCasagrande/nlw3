@@ -9,7 +9,12 @@ import Orphanage from "../models/Orphanage"
 import { Request, Response } from "express"
 
 export default {
-    async createOrphanage(req: Request, res: Response) {
+    async index(req: Request, res: Response) {
+        const orphanageRepo = getRepository(Orphanage) //Pega o repositório de orfanatos na class Orphanage
+        const orphanages = await orphanageRepo.find()
+        return res.status(200).json(orphanages)
+    },
+    async create(req: Request, res: Response) {
         /* Desestrutura o body da requisição em variáveis relevantes */
         const {
             name, latitude,
@@ -18,7 +23,7 @@ export default {
             open_on_weekends
         } = req.body
 
-        const orphanageRepo = getRepository(Orphanage) //Pega o repositório de orfanatos na class Orphanage
+        const orphanageRepo = getRepository(Orphanage)
 
         const orphanage = orphanageRepo.create({/* Cria uma entidade orfanot */
             name, latitude,
