@@ -35,5 +35,12 @@ export default {
         await orphanageRepo.save(orphanage) /* Salva o orfanato no DB */
 
         return res.status(201).json(orphanage) //201 -> criou e deu certo
+    },
+    async show(req: Request, res: Response) {
+        const { id } = req.params
+        const orphanageRepo = getRepository(Orphanage)
+        return await orphanageRepo.findOneOrFail(id)
+            .then(orphanage => res.status(200).json(orphanage))
+            .catch(() => { res.status(404).json({ message: "orphanage not found" }) })
     }
 }
