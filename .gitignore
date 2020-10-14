@@ -9235,3 +9235,9 @@ backend/uploads/1602685430336-img3.jpg
 backend/uploads/1602685430417-img2.jpg
 backend/uploads/1602685441317-img3.jpg
 backend/uploads/1602685441378-img2.jpg
+backend/node_modules/npm-normalize-package-bin/.gitignore
+backend/node_modules/npm-normalize-package-bin/index.js
+backend/node_modules/npm-normalize-package-bin/LICENSE
+backend/node_modules/npm-normalize-package-bin/package-lock.json
+backend/node_modules/npm-normalize-package-bin/package.json
+backend/node_modules/npm-normalize-package-bin/README.md
