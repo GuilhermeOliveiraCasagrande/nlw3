@@ -21,6 +21,8 @@ function Title(props: Props) {
   return <h1>{props.title}</h1>
 } 
 */
+import "./styles/global.css"
+import "leaflet/dist/leaflet.css"
 
 function App() {
   return (
