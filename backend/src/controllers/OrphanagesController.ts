@@ -64,7 +64,9 @@ export default {
         /* Valida todos os campos do objeto dados, se der erro cai no error handler */
         await schema.validate(data, {
             abortEarly: false /* Se algum campo estiver errado, NÃO acabar e devolver um erro */
-        }).catch((err) => res.status(500).json({ message: "Invalid data", errors: err.errors }))
+        }).catch((err) => {
+            return res.status(500).json({ message: "Invalid data", errors: err.errors })
+        })
 
         /* Cria uma entidade orfanto baseado nos dados validados */
         const orphanage = orphanageRepo.create(data)
