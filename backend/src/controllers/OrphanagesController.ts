@@ -1,11 +1,15 @@
 import { getRepository } from "typeorm"
-import Orphanage from "../models/Orphanage"
-import orphanageView from "../views/orphanages_view"
 //Driver nativo => db.query("select * from users")
 //Query builder => db.select("*").from("users").where("name", "Guilherme")
 //ObjectRelationalMapping => tabela users -> User, select * from users -> User, User, User, User, ...
 
 //Query Builder, ORM -> integra com quase qualquer outro DB
+
+import Orphanage from "../models/Orphanage" /* Importa o tipo dos dados necessários para um orfanato */
+import orphanageView from "../views/orphanages_view" /* Importa a rendereização de dados para enviar ao usuário */
+
+
+import * as yup from "yup" /* Importa a biblioteca de validação de dados */
 
 import { Request, Response } from "express" /* Importa os tipos de request e response */
 
@@ -34,29 +38,55 @@ export default {
         /* Transforma em um array de objetos só com os paths das imagens */
         const images = reqImages.map(img => { return { path: img.filename } })
 
-        const orphanage = orphanageRepo.create({/* Cria uma entidade orfanto */
+        const data = { /* Separa os dados para serem validados */
             name, latitude,
             longitude, about,
             instructions, opening_hours,
             open_on_weekends, images
+        }
+
+        /* Cria uma forma para os dados serem encaixados */
+        const schema = yup.object().shape({
+            name: yup.string().required("nome obrigatório"), /* deve ter um atributo name que deve ser uma string */
+            latitude: yup.number().required("latitude obrigatório"),
+            longitude: yup.number().required("longitude obrigatório"),
+            about: yup.string().required("about obrigatório").max(300),
+            instructions: yup.string().required("instructions obrigatório"),
+            opening_hours: yup.string().required("opening_hours obrigatório"),
+            open_on_weekends: yup.boolean().required("open_on_weekends obrigatório"),
+            images: yup.array( /* deve ter um atributo images que é array */
+                yup.object().shape({ /* de objetos que tem */
+                    path: yup.string().required("image.path obrigatório"), /* um atributo string path obrigatório*/
+                })
+            )
         })
+
+        /* Valida todos os campos do objeto dados, se der erro cai no error handler */
+        await schema.validate(data, {
+            abortEarly: false /* Se algum campo estiver errado, NÃO acabar e devolver um erro */
+        }).catch((err) => res.status(500).json({ message: "Invalid data", errors: err.errors }))
+
+        /* Cria uma entidade orfanto baseado nos dados validados */
+        const orphanage = orphanageRepo.create(data)
 
         await orphanageRepo.save(orphanage) /* Salva o orfanato no DB */
 
         //devolve 201 -> criou e deu certo
         /* usa a view para enviar os dados em um formato relevante ao usuário */
-        return res.status(201).json(orphanageView.render(orphanage)) 
+        return res.status(201).json(orphanageView.render(orphanage))
     },
     async show(req: Request, res: Response) {
         const { id } = req.params /* Pega o id do endereço */
+
         const orphanageRepo = getRepository(Orphanage)
+
         return await orphanageRepo.findOneOrFail(id, { /* Acha o orfanato pelo id, se não achar dá erro */
             relations: ['images'] /* Já acha as imagens */
         })
-                /* Se deu certo, dê uma resposta de sucesso */
+            /* Se deu certo, dê uma resposta de sucesso */
             .then(orphanage => res.status(200).json(orphanageView.render(orphanage)))
 
-                /* Se não dá uma resposta de erro que não achou */
+            /* Se não dá uma resposta de erro que não achou */
             .catch(() => { res.status(404).json({ message: "orphanage not found" }) })
     }
 }
