@@ -12,7 +12,7 @@ import api from "../services/api"
 import "../styles/pages/orphanages-map.css"
 
 interface Orphanage {
-    id: number
+    id: string
     name: string
     latitude: number
     longitude: number
@@ -22,11 +22,15 @@ function OrphanagesMap() {
     /* O que usar, quando os valores de um vetor mudarem */
 
     /* State -> dados que são alterados pelo própio componente */
+
+    /* Cria o componete */
     const [orphanages, setOrphanages] = useState<Orphanage[]>([])
 
-    useEffect(() => {
+    console.log(orphanages)
+
+    useEffect(() => { /* Quando roda isso daqui, renderiza o componente denovo */
         api.get("orphanages").then(res => {
-            setOrphanages(res.data)
+            setOrphanages(res.data) /* Faz o get na api e muda troca o valor */
         })
     }, [])
 
