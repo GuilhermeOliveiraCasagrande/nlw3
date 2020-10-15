@@ -5,7 +5,7 @@ export default {
     render(image: Image) {
         return {
             id: image.id,
-            url: `https://localhost:3000/uploads/${image.path}` /* Retorna a url para baixar a imagem */
+            url: `http://localhost:3000/uploads/${image.path}` /* Retorna a url para baixar a imagem */
         }
     },
     renderMany(images: Image[]) {
