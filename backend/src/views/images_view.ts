@@ -1,6 +1,6 @@
 import Image from "../models/Image";
 
-/* Determina o que é retornado para a respost */
+/* Determina o que é retornado para a resposta */
 export default {
     render(image: Image) {
         return {
