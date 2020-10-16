@@ -42,7 +42,7 @@ export default {
             name, latitude,
             longitude, about,
             instructions, opening_hours,
-            open_on_weekends: open_on_weekends === "true" ? true : false
+            open_on_weekends: open_on_weekends === "true"
             , images
         }
 
