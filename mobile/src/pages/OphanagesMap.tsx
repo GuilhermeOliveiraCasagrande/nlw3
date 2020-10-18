@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Callout } from "react-native-maps"
 import { Feather } from "@expo/vector-icons"
 
 import mapMarker from "../images/map-marker.png" /* Sumiu o erro por causa do index.d.ts */
 import { useNavigation } from "@react-navigation/native";
+import { RectButton } from "react-native-gesture-handler";
 /* Png's de 3 tamanhos para celulares com desidades de pixels diferentes*/
 
 /* className -> style */
@@ -19,6 +20,10 @@ export default function OphanagesMap() {
 
     function handleNavigateOrphanageDetails() {
         navigation.navigate("OrphanageDetails")
+    }
+
+    function handleNavigateCreateOrphanage() {
+        navigation.navigate("SelectMapPosition")
     }
 
     return (
@@ -42,12 +47,12 @@ export default function OphanagesMap() {
             </MapView>
             <View style={styles.footer}>
                 <Text style={styles.footerText}>5 orfanatos encontrados</Text>
-                <TouchableOpacity style={styles.createOrphangeButton}
-                    onPress={() => { alert("Redirecionar para página de criar orfanato") }}>
+                <RectButton style={styles.createOrphangeButton}
+                    onPress={handleNavigateCreateOrphanage}>
                     <Feather name="plus" size={20} color="#FFF" />
-                </TouchableOpacity>
+                </RectButton>
             </View>
-        </View>
+        </View >
     );
 }
 
