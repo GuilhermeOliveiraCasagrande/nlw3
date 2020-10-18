@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Callout } from "react-native-maps"
-import { Feather } from "@expo/vector-icons"
 
+import { Feather } from "@expo/vector-icons"
 import mapMarker from "../images/map-marker.png" /* Sumiu o erro por causa do index.d.ts */
+/* Png's de 3 tamanhos para celulares com desidades de pixels diferentes*/
+
 import { useNavigation } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
-/* Png's de 3 tamanhos para celulares com desidades de pixels diferentes*/
+
+import api from '../services/api'
 
 /* className -> style */
 /* div -> View */
@@ -15,16 +18,29 @@ import { RectButton } from "react-native-gesture-handler";
 /* Tooltip true -> callout do zero */
 /* Callout anchor -> onde o callout vai aparecer */
 
+interface Orphanage {
+    id: number
+    latitude: number
+    longitude: number
+    name: string
+}
+
 export default function OphanagesMap() {
     const navigation = useNavigation()
 
-    function handleNavigateOrphanageDetails() {
-        navigation.navigate("OrphanageDetails")
+    const [orphanages, setOrphanages] = useState<Orphanage[]>([])
+
+    function handleNavigateOrphanageDetails(id: number) {
+        navigation.navigate("OrphanageDetails", { id })
     }
 
     function handleNavigateCreateOrphanage() {
         navigation.navigate("SelectMapPosition")
     }
+
+    useEffect(() => {
+        api.get("orphanages").then(res => setOrphanages(res.data))
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -32,18 +48,29 @@ export default function OphanagesMap() {
                 latitude: -23.220442, longitude: -45.902776,
                 latitudeDelta: 0.008, longitudeDelta: 0.008
             }} provider={PROVIDER_GOOGLE}>
-                <Marker icon={mapMarker} coordinate={{
-                    latitude: -23.220442, longitude: -45.902776
-                }}
-                    calloutAnchor={{
-                        x: 2.7, y: 0.8
-                    }}>
-                    <Callout tooltip={true} onPress={handleNavigateOrphanageDetails}>
-                        <View style={styles.calloutConainter}>
-                            <Text style={styles.calloutText}>Orfanato supimpasso</Text>
-                        </View>
-                    </Callout>
-                </Marker>
+
+                {
+                    orphanages.map(orphanage => (
+                        <Marker
+                            key={orphanage.id}
+                            icon={mapMarker}
+                            coordinate={{
+                                latitude: orphanage.latitude,
+                                longitude: orphanage.longitude
+                            }}
+                            calloutAnchor={{
+                                x: 2.7, y: 0.8
+                            }}>
+                            <Callout tooltip={true} onPress={() => handleNavigateOrphanageDetails(orphanage.id)}>
+                                <View style={styles.calloutConainter}>
+                                    <Text style={styles.calloutText}>{orphanage.name}</Text>
+                                </View>
+                            </Callout>
+                        </Marker>
+                    )
+                    )
+                }
+
             </MapView>
             <View style={styles.footer}>
                 <Text style={styles.footerText}>5 orfanatos encontrados</Text>
@@ -79,7 +106,7 @@ const styles = StyleSheet.create({
         color: "#0089a5",
         fontSize: 14,
         elevation: 3,
-        fontFamily: "nunito700"
+        fontFamily: "Nunito_700Bold"
     },
     footer: {
         position: "absolute",
@@ -98,7 +125,7 @@ const styles = StyleSheet.create({
     },
     footerText: {
         color: "#8fa7b3",
-        fontFamily: "nunito700"
+        fontFamily: "Nunito_700Bold"
     },
     createOrphangeButton: {
         width: 56,

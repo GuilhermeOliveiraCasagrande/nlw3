@@ -3,6 +3,12 @@ import { ScrollView, View, StyleSheet, Switch, Text, TextInput, TouchableOpacity
 import { Feather } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 
+/* 
+  TextInput -> input
+  TextInput multiline -> textarea
+  Switch -> checkbox
+*/
+
 export default function OrphanageData() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ padding: 24 }}>
@@ -25,7 +31,7 @@ export default function OrphanageData() {
       />
 
       <Text style={styles.label}>Fotos</Text>
-      <TouchableOpacity style={styles.imagesInput} onPress={() => {}}>
+      <TouchableOpacity style={styles.imagesInput} onPress={() => { }}>
         <Feather name="plus" size={24} color="#15B6D6" />
       </TouchableOpacity>
 
@@ -44,13 +50,13 @@ export default function OrphanageData() {
 
       <View style={styles.switchContainer}>
         <Text style={styles.label}>Atende final de semana?</Text>
-        <Switch 
-          thumbColor="#fff" 
+        <Switch
+          thumbColor="#fff"
           trackColor={{ false: '#ccc', true: '#39CC83' }}
         />
       </View>
 
-      <RectButton style={styles.nextButton} onPress={() => {}}>
+      <RectButton style={styles.nextButton} onPress={() => { }}>
         <Text style={styles.nextButtonText}>Cadastrar</Text>
       </RectButton>
     </ScrollView>
