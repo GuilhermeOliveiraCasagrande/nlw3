@@ -6,7 +6,7 @@ import { Feather } from "@expo/vector-icons"
 import mapMarker from "../images/map-marker.png" /* Sumiu o erro por causa do index.d.ts */
 /* Png's de 3 tamanhos para celulares com desidades de pixels diferentes*/
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 
 import api from '../services/api'
@@ -38,9 +38,10 @@ export default function OphanagesMap() {
         navigation.navigate("SelectMapPosition")
     }
 
-    useEffect(() => {
+    /* Quando entrar nessa tela, rode isso */
+    useFocusEffect(() => {
         api.get("orphanages").then(res => setOrphanages(res.data))
-    }, [])
+    })
 
     return (
         <View style={styles.container}>
