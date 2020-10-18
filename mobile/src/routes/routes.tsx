@@ -5,13 +5,19 @@ import { createStackNavigator } from "@react-navigation/stack"
 
 const { Navigator, Screen } = createStackNavigator()
 
+/* NavigationContainer -> contêm o navegador */
+/* Navigator -> troca de telas */
+/* Screen -> contêm os componentes */
+
 import OrphanagesMap from "../pages/OphanagesMap"
+import OrphanageDetails from "../pages/OrphanageDetails"
 
 export default function Routes() {
     return (
         <NavigationContainer>
-            <Navigator>
-                <Screen name="OrphanagesMap" component={OrphanagesMap}/>
+            <Navigator screenOptions={{ headerShown: false }}>
+                <Screen name="OrphanagesMap" component={OrphanagesMap} />
+                <Screen name="OrphanageDetails" component={OrphanageDetails} />
             </Navigator>
         </NavigationContainer>
     )

@@ -4,10 +4,23 @@ import MapView, { Marker, PROVIDER_GOOGLE, Callout } from "react-native-maps"
 import { Feather } from "@expo/vector-icons"
 
 import mapMarker from "../images/map-marker.png" /* Sumiu o erro por causa do index.d.ts */
+import { useNavigation } from "@react-navigation/native";
 /* Png's de 3 tamanhos para celulares com desidades de pixels diferentes*/
 
+/* className -> style */
+/* div -> View */
+/* qualquer texto -> Text */
+/* Marker popup -> Marker callout */
+/* Tooltip true -> callout do zero */
+/* Callout anchor -> onde o callout vai aparecer */
 
 export default function OphanagesMap() {
+    const navigation = useNavigation()
+
+    function handleNavigateOrphanageDetails() {
+        navigation.navigate("OrphanageDetails")
+    }
+
     return (
         <View style={styles.container}>
             <MapView style={styles.map} initialRegion={{
@@ -20,7 +33,7 @@ export default function OphanagesMap() {
                     calloutAnchor={{
                         x: 2.7, y: 0.8
                     }}>
-                    <Callout tooltip={true} onPress={() => { alert("redirecionando para página de detalhe") }}>
+                    <Callout tooltip={true} onPress={handleNavigateOrphanageDetails}>
                         <View style={styles.calloutConainter}>
                             <Text style={styles.calloutText}>Orfanato supimpasso</Text>
                         </View>
