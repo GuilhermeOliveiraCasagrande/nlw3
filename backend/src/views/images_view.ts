@@ -1,11 +1,12 @@
 import Image from "../models/Image";
+import ip from "ip"
 
 /* Determina o que é retornado para a resposta */
 export default {
     render(image: Image) {
         return {
             id: image.id,
-            url: `http://192.168.18.34:3333/uploads/${image.path}` /* Retorna a url para baixar a imagem */
+            url: `http://${ip.address()}:3333/uploads/${image.path}` /* Retorna a url para baixar a imagem */
         }
     },
     renderMany(images: Image[]) {
