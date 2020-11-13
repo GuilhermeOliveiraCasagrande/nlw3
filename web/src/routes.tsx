@@ -5,6 +5,7 @@ import Landing from "./pages/landing";
 import OrphanagesMap from "./pages/OrphanagesMap";
 import CreateOrphanage from "./pages/CreateOrphanage";
 import Orphanage from "./pages/Orphanage";
+import Dashboard from "./pages/Dashboard"
 
 /* 
 Cria um roteamento de páginas do navegador 
@@ -25,6 +26,7 @@ function Routes() {
                 <Route path="/app" component={OrphanagesMap} />
                 <Route path="/orphanages/create" component={CreateOrphanage} />
                 <Route path="/orphanages/:id" component={Orphanage} />
+                <Route path="/dashboard" component={Dashboard} />
             </Switch>
         </BrowserRouter>
     );

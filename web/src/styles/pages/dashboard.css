@@ -1,0 +1,37 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr 30%; 
+}
+
+.login{
+    color: black;
+    grid-column: 2;
+
+    display: flex;
+    flex-flow: column;
+
+    padding-right: 30px;
+}
+
+.login .input-wrapper{
+    padding-bottom: 20px;
+}
+
+.login .options-wrapper{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.login .options-wrapper .remember-wrapper label{
+    margin-left: 2px;
+}
+
+.banner{
+    grid-column: 1;
+}
+
+.go-back{
+    background-color: #EBF2F5;
+    border-radius: 20px;
+}

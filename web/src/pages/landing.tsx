@@ -17,10 +17,15 @@ function Landing() {
                     <h1>Leve felicidade para o mundo</h1>
                     <p>Visite orfanatos e mude o dia de muitas crianças</p>
                 </main>
+
                 <div className="location">
                     <strong>São José dos Campos</strong>
                     <span>São Paulo</span>
                 </div>
+
+                <Link to="/dashboard" className="enter-dashboard">
+                    ACESO RESTRITO
+                </Link>
 
                 <Link to="/app" className="enter-app">
                     <FiArrowRight size={26} color="rgba(0, 0, 0, 0.6)" />
